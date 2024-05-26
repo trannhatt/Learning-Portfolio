@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Tran Sach Nhat</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Learning Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/aboutme']" class="nav-link active">About me</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/research']" class="nav-link active">Historic Research Hobbies</a>
+        </li>
+
+        <ng-container *ngIf="user !== undefined && user?.roles?.includes('Writer')">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Admin
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/admin/categories']">Categories</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/blogposts']">BlogPosts</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+
+      <form class="d-flex" (submit)="onSearch()" *ngIf="user === undefined">
+        <div class="input-group">
+          <input class="form-control" type="search" placeholder="Search Documentation..." aria-label="Search"
+            style="width: 320px;" [(ngModel)]="searchQuery" name="searchQuery">
+          <button class="btn btn-outline-light" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+
+      <div class="d-flex">
+        <ng-container *ngIf="user === undefined;else showLogout">
+          <!-- Show Login Button -->
+          <a [routerLink]="['/login']" class="btn btn-outline-light ms-3">Login</a>
+        </ng-container>
+        <ng-template #showLogout>
+          <div class="d-flex align-items-center">
+            <span>{{user?.email}}</span>
+            <button class="btn btn-primary ms-3" (click)="onLogout()">Logout</button>
+          </div>
+        </ng-template>
+        <a href="https://github.com" target="_blank" class="btn btn-dark ms-3">
+          <i class="bi bi-github"></i>
+        </a>
+        <a href="https://discord.com" target="_blank" class="btn btn-dark ms-3">
+          <i class="bi bi-discord"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div *ngIf="searchResults.length > 0" class="container mt-3">
+  <h3>Search Results:</h3>
+  <ul>
+    <li *ngFor="let post of searchResults">
+      <a [routerLink]="['/blogpost', post.id]">{{ post.title }}</a>
+    </li>
+  </ul>
+</div>

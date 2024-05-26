@@ -1,0 +1,28 @@
+/* Adjust spacing and styling */
+#table-of-contents {
+  margin-bottom: 20px;
+}
+
+#table-of-contents ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#table-of-contents ul li {
+  margin-bottom: 10px;
+}
+
+/* Ensure content takes full height */
+.row {
+  display: flex;
+}
+
+.col-md-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+.col-md-8 {
+  flex: 0 0 66.666667%;
+  max-width: 66.666667%;
+}
